@@ -14,6 +14,7 @@ import MotionContainer from "../../containers/MotionContainer";
 import UIContainer from "../../containers/UIContainer";
 import SoundContainer from "../../containers/SoundContainer";
 import ConnectButton from "./ConnectButton";
+import APIConnectButton from "./APIConnectButton";
 import Battery from "./Battery";
 import nordiclogo from "../../assets/nordic_logo.png";
 import environment from "../../assets/environment.png";
@@ -140,6 +141,8 @@ class Dashboard extends React.Component {
                 {battery}
               </div>
               <ConnectButton onConnectionEvent={this.onConnectionEvent} disconnect={this.props.disconnect} notifyError={this.props.notifyError} connected={this.props.connected}/>
+              <APIConnectButton onConnectionEvent={this.onConnectionEvent} disconnect={this.props.disconnect} notifyError={this.props.notifyError} connected={this.props.connected}/>
+
             </div>
           </div>
           <div id="main_view">
