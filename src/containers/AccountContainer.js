@@ -1,16 +1,15 @@
 import {connect} from "react-redux";
-import {toggleFeature} from "../actions/misc";
 import Account from "../components/Account/Account";
 
 const mapStateToProps = ({misc}) => {
   return ({
-    temperature: misc.temperature,
+    someprop: misc.prop,
   });
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleTemperature: () => {
-    dispatch(toggleFeature("temperature"));
+  someoperation: () => {
+    console.log("do something");
   },
 });
 

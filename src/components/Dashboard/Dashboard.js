@@ -114,23 +114,32 @@ class Dashboard extends React.Component {
       }
     }
 
-    return (
-
-      <Router>
-        <div id="dashboard">
-          <MediaQuery minWidth={705}>
-            <div className="menu">
-              <img className="logo" src={nordiclogo} />
+    /*
+    <div className="menu">
+              <!-- img className="logo" src={nordiclogo} / -->
               <ul>
                 <NavLink to="/account" className="menuLink"><MenuItem className="menuItem" ><img src={account} />Account</MenuItem></NavLink>
                 <NavLink to="/vocalcommand" className="menuLink"><MenuItem className="menuItem" ><img src={vocalcommand} />VocalCommand</MenuItem></NavLink>
                 <NavLink to="/speechsynth" className="menuLink"><MenuItem className="menuItem" ><img src={speechsynth} />SpeechSynth</MenuItem></NavLink>
                 <NavLink to="/environment" className="menuLink"><MenuItem className="menuItem" ><img src={environment} />Environment</MenuItem></NavLink>
-                <NavLink to="/motion" className="menuLink" activeClassName="active"><MenuItem className="menuItem" ><img src={motion} />Motion</MenuItem></NavLink>
-                <NavLink to="/ui" className="menuLink"><MenuItem className="menuItem" ><img src={ui} />UI</MenuItem></NavLink>
-                <NavLink to="/configuration" className="menuLink"><MenuItem className="menuItem" ><img src={configuration} />Configuration</MenuItem></NavLink>
-                <NavLink to="/sound" className="menuLink"><MenuItem className="menuItem" ><img src={sound} />Sound</MenuItem></NavLink>
-                <NavLink to="/ifttt" className="menuLink"><MenuItem className="menuItem" ><img src={ifttt} />IFTTT</MenuItem></NavLink>
+                <!-- NavLink to="/motion" className="menuLink" activeClassName="active"><MenuItem className="menuItem" ><img src={motion} />Motion</MenuItem></NavLink-->
+                <!-- NavLink to="/ui" className="menuLink"><MenuItem className="menuItem" ><img src={ui} />UI</MenuItem></NavLink-->
+                <!--NavLink to="/configuration" className="menuLink"><MenuItem className="menuItem" ><img src={configuration} />Configuration</MenuItem></NavLink-->
+                <!--NavLink to="/sound" className="menuLink"><MenuItem className="menuItem" ><img src={sound} />Sound</MenuItem></NavLink-->
+                <!-- NavLink to="/ifttt" className="menuLink"><MenuItem className="menuItem" ><img src={ifttt} />IFTTT</MenuItem></NavLink-->
+              </ul>
+            </div>
+    */
+    return (
+      <Router>
+        <div id="dashboard">
+          <MediaQuery minWidth={705}>
+            <div className="menu">
+              <ul>
+                <NavLink to="/account" className="menuLink"><MenuItem className="menuItem" ><img src={account} />Account</MenuItem></NavLink>
+                <NavLink to="/vocalcommand" className="menuLink"><MenuItem className="menuItem" ><img src={vocalcommand} />VocalCommand</MenuItem></NavLink>
+                <NavLink to="/speechsynth" className="menuLink"><MenuItem className="menuItem" ><img src={speechsynth} />SpeechSynth</MenuItem></NavLink>
+                <NavLink to="/environment" className="menuLink"><MenuItem className="menuItem" ><img src={environment} />Environment</MenuItem></NavLink>
               </ul>
             </div>
           </MediaQuery>
