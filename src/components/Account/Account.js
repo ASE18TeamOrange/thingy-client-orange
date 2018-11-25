@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import {Card} from "../Common/Common";
 import "./styles.css";
 
 class Account extends React.Component {
