@@ -9,6 +9,8 @@ import AccountContainer from "../../containers/AccountContainer";
 import account from "../../assets/environment.png";
 import VocalCommandContainer from "../../containers/VocalCommandContainer";
 import vocalcommand from "../../assets/environment.png";
+import SpeechSynthContainer from "../../containers/SpeechSynthContainer";
+import speechsynth from "../../assets/environment.png";
 import EnvironmentContainer from "../../containers/EnvironmentContainer";
 import MotionContainer from "../../containers/MotionContainer";
 import UIContainer from "../../containers/UIContainer";
@@ -98,6 +100,7 @@ class Dashboard extends React.Component {
           <Switch>
             <Route exact path="/account" component={AccountContainer} />
             <Route exact path="/vocalcommand" component={VocalCommandContainer} />
+            <Route exact path="/speechsynth" component={SpeechSynthContainer} />
             <Route exact path="/environment" component={EnvironmentContainer} />
             <Route exact path="/motion" component={MotionContainer} />
             <Route exact path="/ui" component={UIContainer} />
@@ -121,6 +124,7 @@ class Dashboard extends React.Component {
               <ul>
                 <NavLink to="/account" className="menuLink"><MenuItem className="menuItem" ><img src={account} />Account</MenuItem></NavLink>
                 <NavLink to="/vocalcommand" className="menuLink"><MenuItem className="menuItem" ><img src={vocalcommand} />VocalCommand</MenuItem></NavLink>
+                <NavLink to="/speechsynth" className="menuLink"><MenuItem className="menuItem" ><img src={speechsynth} />SpeechSynth</MenuItem></NavLink>
                 <NavLink to="/environment" className="menuLink"><MenuItem className="menuItem" ><img src={environment} />Environment</MenuItem></NavLink>
                 <NavLink to="/motion" className="menuLink" activeClassName="active"><MenuItem className="menuItem" ><img src={motion} />Motion</MenuItem></NavLink>
                 <NavLink to="/ui" className="menuLink"><MenuItem className="menuItem" ><img src={ui} />UI</MenuItem></NavLink>
