@@ -4,40 +4,32 @@ import {Card} from "../Common/Common";
 import "./styles.css";
 
 class Account extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            popupOpen: false,
-        };
-    }
+    this.state = {
+      popupOpen: false,
+    };
+  }
 
-    componentDidMount() {
+  handleNameChange(event) {
+    this.setState({name: event.target.value});
+  }
 
-    }
+  // -----
 
-    componentWillReceiveProps(np) {
+  handleNameSubmit() {
+    this.props.writeName(this.state.name);
+  }
 
-    }
-
-    handleNameChange(event) {
-        this.setState({name: event.target.value});
-    }
-
-    // -----
-
-    handleNameSubmit() {
-        this.props.writeName(this.state.name);
-    }
-
-    render() {
-        return (
-            <div id="account">
-                <h3> Account </h3>
-                <p> Hello World </p>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div id="account">
+        <h3> Account </h3>
+        <p> Hello World Account </p>
+      </div>
+    );
+  }
 }
 
 export default Account;

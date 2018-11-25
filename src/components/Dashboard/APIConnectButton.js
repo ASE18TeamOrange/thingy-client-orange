@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Thingy from "thingy52_web_bluetooth";
+import ThingyAPI from "thingy52_web_bluetooth";
 import Button from "material-ui/RaisedButton";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -13,8 +13,8 @@ class APIConnectButton extends React.Component {
   async start() {
     if (!this.props.connected) {
       try {
-        const thingy = new Thingy({logEnabled: false});
-        window.thingy = thingy;
+        const thingyAPI = new ThingyAPI({logEnabled: false});
+        window.thingy = thingyAPI;
         const connected = await window.thingy.connect();
         if (connected) {
           this.props.onConnectionEvent(true);
@@ -31,9 +31,9 @@ class APIConnectButton extends React.Component {
   render() {
     let text;
     if (!this.props.connected) {
-      text = "CONNECT";
+      text = "CONNECT API";
     } else {
-      text = "DISCONNECT";
+      text = "DISCONNECT API";
     }
     return (
       <div>

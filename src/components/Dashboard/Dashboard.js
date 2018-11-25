@@ -7,7 +7,7 @@ import MenuItem from "material-ui/MenuItem";
 import {ToastContainer, toast} from "react-toastify";
 import AccountContainer from "../../containers/AccountContainer";
 import account from "../../assets/environment.png";
-import VocalCommandContainer from "../../containers/AccountContainer";
+import VocalCommandContainer from "../../containers/VocalCommandContainer";
 import vocalcommand from "../../assets/environment.png";
 import EnvironmentContainer from "../../containers/EnvironmentContainer";
 import MotionContainer from "../../containers/MotionContainer";
@@ -120,7 +120,7 @@ class Dashboard extends React.Component {
               <img className="logo" src={nordiclogo} />
               <ul>
                 <NavLink to="/account" className="menuLink"><MenuItem className="menuItem" ><img src={account} />Account</MenuItem></NavLink>
-                <NavLink to="/vocalcommand" className="menuLink"><MenuItem className="menuItem" ><img src={vocalcommand} />Vocal Command</MenuItem></NavLink>
+                <NavLink to="/vocalcommand" className="menuLink"><MenuItem className="menuItem" ><img src={vocalcommand} />VocalCommand</MenuItem></NavLink>
                 <NavLink to="/environment" className="menuLink"><MenuItem className="menuItem" ><img src={environment} />Environment</MenuItem></NavLink>
                 <NavLink to="/motion" className="menuLink" activeClassName="active"><MenuItem className="menuItem" ><img src={motion} />Motion</MenuItem></NavLink>
                 <NavLink to="/ui" className="menuLink"><MenuItem className="menuItem" ><img src={ui} />UI</MenuItem></NavLink>
