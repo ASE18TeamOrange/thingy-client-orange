@@ -2,7 +2,6 @@
 
 Web app client for thingy-api-client
 
-
 Setup locally
 
 Install Node.js
@@ -22,6 +21,3 @@ To run the client go where package.json is located and, type:
 npm start
 
 On WebStorm as soon as the the server starts, either you are prompted to open a browser (then open Chrome Canary) or open Chrome Canary manually and go to http://localhost:3000/
-
-
-
