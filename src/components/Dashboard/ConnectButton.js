@@ -31,7 +31,7 @@ class ConnectButton extends React.Component {
   render() {
     let text;
     if (!this.props.connected) {
-      text = "CONNECT";
+      text = "PAIR (To remove)";
     } else {
       text = "DISCONNECT";
     }

@@ -153,8 +153,9 @@ class Dashboard extends React.Component {
                 <h1>{emojify(this.props.name, {style: {width: "24px", height: "24px"}})}</h1>
                 {battery}
               </div>
-              <ConnectButton onConnectionEvent={this.onConnectionEvent} disconnect={this.props.disconnect} notifyError={this.props.notifyError} connected={this.props.connected}/>
               <APIConnectButton onConnectionEvent={this.onConnectionEvent} disconnect={this.props.disconnect} notifyError={this.props.notifyError} connected={this.props.connected}/>
+
+              <ConnectButton onConnectionEvent={this.onConnectionEvent} disconnect={this.props.disconnect} notifyError={this.props.notifyError} connected={this.props.connected}/>
 
             </div>
           </div>
