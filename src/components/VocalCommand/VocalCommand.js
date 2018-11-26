@@ -88,8 +88,8 @@ class VocalCommand extends Component {
     return (
       <div style={container}>
         <button id='microphone-btn' style={button} onClick={this.toggleListen} />
-        <div id='interim' style={interim}></div>
-        <div id='final' style={final}></div>
+        <div id='interim' style={interim}>&nbsp;</div>
+        <div id='final' style={final}>&nbsp;</div>
       </div>
     );
   }

@@ -86,8 +86,18 @@ class Dashboard extends React.Component {
     }
   }
 
+  /*
+
+            <Route exact path="/motion" component={MotionContainer} />
+            <Route exact path="/ui" component={UIContainer} />
+            <Route exact path="/configuration" component={ConfigurationContainer} />
+            <Route exact path="/sound" component={SoundContainer} />
+            <Route exact path="/ifttt" component={IFTTTContainer} />
+
+  */
+
   render() {
-    let routes = <div className="loading_dashboard"><div><h1 id="connect-prompt"> Please connect your Thingy</h1></div></div>;
+    let routes = "";// <div className="loading_dashboard"><div><h1 id="connect-prompt"> Please connect your Thingy</h1></div></div>;
     let battery;
 
     if (this.props.connected) {
@@ -102,11 +112,6 @@ class Dashboard extends React.Component {
             <Route exact path="/vocalcommand" component={VocalCommandContainer} />
             <Route exact path="/speechsynth" component={SpeechSynthContainer} />
             <Route exact path="/environment" component={EnvironmentContainer} />
-            <Route exact path="/motion" component={MotionContainer} />
-            <Route exact path="/ui" component={UIContainer} />
-            <Route exact path="/configuration" component={ConfigurationContainer} />
-            <Route exact path="/sound" component={SoundContainer} />
-            <Route exact path="/ifttt" component={IFTTTContainer} />
             <Redirect from="/" to="/environment" />
           </Switch>
         );
@@ -150,7 +155,7 @@ class Dashboard extends React.Component {
                 <MediaQuery maxWidth={704}>
                   <BurgerMenu/>
                 </MediaQuery>
-                <h1>{emojify(this.props.name, {style: {width: "24px", height: "24px"}})}</h1>
+                <h1>{emojify("OrangeWebApp", {style: {width: "24px", height: "24px"}})}</h1>
                 {battery}
               </div>
               <APIConnectButton disconnect={this.props.disconnect} notifyError={this.props.notifyError} />
