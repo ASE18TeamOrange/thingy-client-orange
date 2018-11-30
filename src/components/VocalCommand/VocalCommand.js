@@ -1,5 +1,6 @@
 "use strict";
 import React, {Component} from "react";
+import ThingyAPI from "../../thingyapi/ThingyAPI";
 
 // ------------------------SPEECH RECOGNITION-----------------------------
 
@@ -21,6 +22,8 @@ class VocalCommand extends Component {
     };
     this.toggleListen = this.toggleListen.bind(this);
     this.handleListen = this.handleListen.bind(this);
+
+    this.ThingAPI = new ThingyAPI();
   }
 
   toggleListen() {
@@ -51,16 +54,34 @@ class VocalCommand extends Component {
 
     let finalTranscript = "";
     recognition.onresult = (event) => {
-      let interimTranscript = "";
-
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        const transcript = event.results[i][0].transcript;
-        if (event.results[i].isFinal) finalTranscript += transcript + " ";
-        else interimTranscript += transcript;
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          const transcript = event.results[i][0].transcript.trim();
+          if (transcript === "temperature") {
+            this.ThingAPI.getTemperature();
+          }
+          if (transcript === "humidity") {
+            this.ThingAPI.getHumidity();
+          }
+          if (transcript === "play") {
+            this.ThingAPI.play();
+          }
+          if (transcript === "ciao") {
+            this.ThingAPI.greet();
+          }
+        }
       }
-      document.getElementById("interim").innerHTML = interimTranscript;
-      document.getElementById("final").innerHTML = finalTranscript;
+      console.info(`You said : ${transcript}`);
 
+      //let interimTranscript = "";
+
+      //for (let i = event.resultIndex; i < event.results.length; i++) {
+      //  const transcript = event.results[i][0].transcript;
+      //  if (event.results[i].isFinal) finalTranscript += transcript + " ";
+      //  else interimTranscript += transcript;
+      //}
+      //document.getElementById("interim").innerHTML = interimTranscript;
+      //document.getElementById("final").innerHTML = finalTranscript;
       // -------------------------COMMANDS------------------------------------
 
       const transcriptArr = finalTranscript.split(" ");
@@ -78,7 +99,6 @@ class VocalCommand extends Component {
     };
 
     // -----------------------------------------------------------------------
-
     recognition.onerror = (event) => {
       console.log("Error occurred in recognition: " + event.error);
     };
@@ -87,7 +107,7 @@ class VocalCommand extends Component {
   render() {
     return (
       <div style={container}>
-        <button id='microphone-btn' style={button} onClick={this.toggleListen} />
+        <button id='microphone-btn' style={button} onClick={this.toggleListen}/>
         <div id='interim' style={interim}>&nbsp;</div>
         <div id='final' style={final}>&nbsp;</div>
       </div>
@@ -96,7 +116,6 @@ class VocalCommand extends Component {
 }
 
 export default VocalCommand;
-
 
 // -------------------------CSS------------------------------------
 

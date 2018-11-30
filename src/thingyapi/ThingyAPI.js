@@ -1,3 +1,6 @@
+import Client from "node-rest-client";
+
+/*
 import AdvertisingParametersService from "./AdvertisingParametersService.js";
 import MicrophoneSensor from "./MicrophoneSensor.js";
 import MTUService from "./MTUService.js";
@@ -28,11 +31,15 @@ import SoundConfigurationService from "./SoundConfigurationService.js";
 import SpeakerDataService from "./SpeakerDataService.js";
 import SpeakerStatusService from "./SpeakerStatusService.js";
 import BatteryService from "./BatteryService.js";
+
+
 import ThingyController from "./ThingyController.js";
 import Utilities from "./Utilities.js";
 import EventTarget from "./EventTarget.js";
+import {Component} from "react";
+import React from "react";
 
-var Thingy = /** @class */ (function (_super) {
+let Thingy = / ** @class * /   (function (_super) {
   __extends(Thingy, _super);
   function Thingy(options) {
     if (options === void 0) { options = { logEnabled: true }; }
@@ -68,15 +75,15 @@ var Thingy = /** @class */ (function (_super) {
           case 0:
             _a.trys.push([0, 2, , 3]);
             this.resetDeviceProperties();
-            return [4 /*yield*/, this.device.gatt.disconnect()];
+            return [4 / *yield* /, this.device.gatt.disconnect()];
           case 1:
             _a.sent();
-            return [2 /*return*/, true];
+            return [2 / *return* /, true];
           case 2:
             error_3 = _a.sent();
             this.utilities.processEvent("error", "thingy", error_3);
-            return [2 /*return*/, false];
-          case 3: return [2 /*return*/];
+            return [2 / *return* /, false];
+          case 3: return [2 / *return* /];
         }
       });
     }); };
@@ -171,4 +178,32 @@ var Thingy = /** @class */ (function (_super) {
   }
   return Thingy;
 }(EventTarget));
+*/
+
+
+class ThingyAPI {
+  constructor() {
+    this.client = new Client();
+    this.registerMethods();
+  }
+
+  registerMethods() {
+    // registering remote methods
+    this.client.registerMethod("getTemperature", "http://remote.site/rest/json/method", "GET");
+
+    this.client.methods.getTemperature(function(data, response) {
+      // parsed response body as js object
+      console.log(data);
+      // raw response
+      console.log(response);
+    });
+  }
+
+  toggleListen() {
+    this.setState({
+      listening: !this.state.listening,
+    }, this.handleListen);
+  }
+}
+
 export default ThingyAPI;
