@@ -1,0 +1,38 @@
+class UserRequests {
+  constructor(client, apiurl) {
+    this.client = client;
+    this.apiurl = apiurl;
+    thisr.route = this.apiurl + "{context}/";
+    this.registerMethods();
+  }
+
+  registerMethods() {
+    this.client.registerMethod("getUser", this.route, "GET");
+    this.client.registerMethod("registerUser", this.route, "POST");
+    this.client.registerMethod("deleteUser", this.route, "DELETE");
+  }
+
+  configureGetRequest() {
+    return {
+      path: {context: "user"},
+    };
+  }
+
+  configurePostRequest(user, password) {
+    return {
+      path: {contxt: "user"},
+      data: {username: user, password: password},
+    };
+  }
+
+  configureDeleteRequest(user, password) {
+    return {
+      path: {contxt: "user"},
+      data: {username: user, password: password},
+    };
+  }
+}
+
+export default UserRequests;
+
+

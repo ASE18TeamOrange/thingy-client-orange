@@ -180,29 +180,30 @@ let Thingy = / ** @class * /   (function (_super) {
 }(EventTarget));
 */
 
+import UserMethods from "./UserRequestsjs";
+import TemperatureRequests from "./TemperatureRequests";
+import HumidityRequests from "./HumidityRequests";
 
 class ThingyAPI {
+
   constructor() {
     this.client = new Client();
-    this.registerMethods();
+    this.apiurl = "localhost:8081/";
+    this.userClient = new UserMethods(this.client, this.apiurl);
+    this.temperatureClient = new TemperatureRequests(this.client, this.apiurl);
+    this.humidityClient = new HumidityRequests(this.client, this.apiurl);
   }
 
-  registerMethods() {
-    // registering remote methods
-    this.client.registerMethod("getTemperature", "http://remote.site/rest/json/method", "GET");
-
-    this.client.methods.getTemperature(function(data, response) {
-      // parsed response body as js object
-      console.log(data);
-      // raw response
-      console.log(response);
-    });
+  getUserClient() {
+    return this.userClient;
   }
 
-  toggleListen() {
-    this.setState({
-      listening: !this.state.listening,
-    }, this.handleListen);
+  getTemperatureClient() {
+    return this.temperatureClient;
+  }
+
+  getHumidtyClient() {
+    return this.humidityClient;
   }
 }
 

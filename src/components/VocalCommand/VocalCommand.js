@@ -11,7 +11,6 @@ recognition.continous = true;
 recognition.interimResults = true;
 recognition.lang = "en-US";
 
-
 // ------------------------COMPONENT-----------------------------
 
 class VocalCommand extends Component {
