@@ -16,7 +16,7 @@ class VocalCommandHandler {
   }
 
   valid(command) {
-    if( commandWords.includes(command.toLocaleLowerCase())) {
+    if( this.commandWords.includes(command.toLocaleLowerCase())) {
       return true;
     } else {
       console.log("error, said: " + command.toLocaleString())
