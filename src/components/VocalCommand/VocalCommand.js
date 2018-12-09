@@ -1,6 +1,6 @@
 "use strict";
 import React, {Component} from "react";
-import ThingyAPI from "../../thingyapi/ThingyAPI";
+import VocalCommandHandler from "./VocalCommandHandler";
 
 // ------------------------SPEECH RECOGNITION-----------------------------
 
@@ -14,15 +14,14 @@ recognition.lang = "en-US";
 // ------------------------COMPONENT-----------------------------
 
 class VocalCommand extends Component {
-  constructor() {
+  constructor(thingyAPIClient) {
     super();
     this.state = {
       listening: false,
     };
     this.toggleListen = this.toggleListen.bind(this);
     this.handleListen = this.handleListen.bind(this);
-
-    this.ThingAPI = new ThingyAPI();
+    this.vocalCommandHandler = new VocalCommandHandler(thingyAPIClient);
   }
 
   toggleListen() {
@@ -55,22 +54,11 @@ class VocalCommand extends Component {
     recognition.onresult = (event) => {
       for (let i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
-          const transcript = event.results[i][0].transcript.trim();
-          if (transcript === "temperature") {
-            this.ThingAPI.getTemperature();
-          }
-          if (transcript === "humidity") {
-            this.ThingAPI.getHumidity();
-          }
-          if (transcript === "play") {
-            this.ThingAPI.play();
-          }
-          if (transcript === "ciao") {
-            this.ThingAPI.greet();
-          }
+          finalTranscript = event.results[i][0].transcript.trim();
+          this.vocalCommandHandler.handle(finalTranscript);
         }
       }
-      console.info(`You said : ${transcript}`);
+      console.info(`You said : ${finalTranscript}`);
 
       //let interimTranscript = "";
 

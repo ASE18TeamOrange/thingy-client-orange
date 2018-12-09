@@ -1,33 +1,32 @@
 import React from "react";
 import "./styles.css";
+import {Redirect} from "react-router";
+import PropTypes from "prop-types";
 
 class Account extends React.Component {
   constructor(props) {
     super(props);
-
+    this.authenticated = false;//props.authenticated;
     this.state = {
       popupOpen: false,
+      username: "foo",
+      fireRedirect: !this.authenticated,
     };
   }
-
-  handleNameChange(event) {
-    this.setState({name: event.target.value});
-  }
-
-  // -----
-
-  handleNameSubmit() {
-    this.props.writeName(this.state.name);
-  }
-
   render() {
     return (
       <div id="account">
-        <h3> Account </h3>
-        <p> Hello World Account </p>
+        <h3>Wellcome back {this.state.username}</h3>
+        {this.state.fireRedirect && <Redirect to={{
+          pathname: "/subscription",
+        }} push={true}/>}
       </div>
     );
   }
 }
+
+Account.propTypes = {
+  authenticated: PropTypes.bool,
+};
 
 export default Account;

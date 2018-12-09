@@ -7,6 +7,8 @@ import MenuItem from "material-ui/MenuItem";
 import {ToastContainer, toast} from "react-toastify";
 import AccountContainer from "../../containers/AccountContainer";
 import account from "../../assets/environment.png";
+import SubscriptionContainer from "../../containers/SubscriptionContainer";
+import subscription from "../../assets/environment.png";
 import VocalCommandContainer from "../../containers/VocalCommandContainer";
 import vocalcommand from "../../assets/environment.png";
 import SpeechSynthContainer from "../../containers/SpeechSynthContainer";
@@ -108,11 +110,12 @@ class Dashboard extends React.Component {
       } else {
         routes = (
           <Switch>
-            <Route exact path="/account" component={AccountContainer} />
-            <Route exact path="/vocalcommand" component={VocalCommandContainer} />
-            <Route exact path="/speechsynth" component={SpeechSynthContainer} />
-            <Route exact path="/environment" component={EnvironmentContainer} />
-            <Redirect from="/" to="/environment" />
+            <Route exact path="/account" component={AccountContainer}/>
+            <Route exact path="/subscription" component={SubscriptionContainer}/>
+            <Route exact path="/vocalcommand" component={VocalCommandContainer}/>
+            <Route exact path="/speechsynth" component={SpeechSynthContainer}/>
+            <Route exact path="/environment" component={EnvironmentContainer}/>
+            <Redirect from="/" to="/environment"/>
           </Switch>
         );
         battery = (<Battery className="battery" batteryLevel={this.props.batteryLevel}/>);

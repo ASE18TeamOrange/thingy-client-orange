@@ -2,7 +2,7 @@ class UserRequests {
   constructor(client, apiurl) {
     this.client = client;
     this.apiurl = apiurl;
-    thisr.route = this.apiurl + "{context}/";
+    this.route = this.apiurl + "{context}/";
     this.registerMethods();
   }
 
@@ -12,24 +12,38 @@ class UserRequests {
     this.client.registerMethod("deleteUser", this.route, "DELETE");
   }
 
+  registerUser(username, password, f) {
+    this.client.methods.registerUser( this.configurePostRequest(username, password), f);
+  }
+
+  deleteUser(username, password, f) {
+    this.client.methods.deleteUser( this.configureDeleteRequest(username, password), f);
+  }
+
   configureGetRequest() {
-    return {
+    const args = {
       path: {context: "user"},
+      headers: {"Content-Type": "application/json"},
     };
+    return args;
   }
 
   configurePostRequest(user, password) {
-    return {
-      path: {contxt: "user"},
+    const args = {
+      path: {context: "user"},
       data: {username: user, password: password},
+      headers: {"Content-Type": "application/json"},
     };
+    return args;
   }
 
   configureDeleteRequest(user, password) {
-    return {
-      path: {contxt: "user"},
+    const args = {
+      path: {context: "user"},
       data: {username: user, password: password},
+      headers: {"Content-Type": "application/json"},
     };
+    return args;
   }
 }
 
