@@ -32,19 +32,12 @@ class Login extends React.Component {
   }
 
   loginResult(data, response) {
-    //console.log(data);
-    //console.log(response);
+
     if (response.statusCode === 200) {
       localStorage.setItem("user", this.state.login);
       localStorage.setItem("password", this.state.password);
       localStorage.setItem("token", data.token);
       window.location.reload();
-      /*
-      this.setState({
-        fireRedirect: true,
-        login: this.state.login,
-      });
-      */
     } else {
       alert("wrong password or username");
     }

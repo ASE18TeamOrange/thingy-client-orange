@@ -30,8 +30,6 @@ class Account extends React.Component {
   }
 
   logoutResult(data, response) {
-    console.log(data);
-    console.log(response);
     localStorage.clear();
     window.location.reload();
   }
@@ -42,7 +40,7 @@ class Account extends React.Component {
 
   getUserProfileResult(data, response) {
     console.log(data);
-    console.log(response);
+    alert(data);
   }
 
   submitThingyName() {
@@ -51,8 +49,7 @@ class Account extends React.Component {
 
   setThingyResult(data, response) {
     console.log(data);
-    console.log(response);
-    alert("operation succeeded");
+    alert(data);
   }
 
   updateThingy(value) {
@@ -66,8 +63,6 @@ class Account extends React.Component {
   }
 
   deleteResult(data, response) {
-    console.log(data);
-    console.log(response);
     localStorage.clear();
     window.location.reload();
   }

@@ -31,8 +31,6 @@ class Subscription extends React.Component {
   }
 
   subscribe(data, response) {
-    console.log(data);
-    console.log(response);
     alert(data);
     this.setState({
       fireRedirect: true,
