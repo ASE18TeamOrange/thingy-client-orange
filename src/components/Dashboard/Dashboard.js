@@ -20,7 +20,6 @@ import MotionContainer from "../../containers/MotionContainer";
 import UIContainer from "../../containers/UIContainer";
 import SoundContainer from "../../containers/SoundContainer";
 import ConnectButton from "./ConnectButton";
-import APIConnectButton from "./APIConnectButton";
 import Battery from "./Battery";
 import environment from "../../assets/environment.png";
 import motion from "../../assets/motion.png";
