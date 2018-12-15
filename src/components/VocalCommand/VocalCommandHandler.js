@@ -1,16 +1,23 @@
+import VocalCommand from "./VocalCommand";
+import humidityClient from "../../thingyapi/EnvironmentSensorClient";
+import temperatureClient from "../../thingyapi/EnvironmentSensorClient";
+
 class VocalCommandHandler {
 
   constructor(client) {
-    this.client = client;
     this.commandWords = ["temperature", "humidity"];
   }
 
   //@todo add promise
-  handle(command) {
+  handle(command, resultFunction) {
     if (this.valid(command)) {
-      return this.client.get(command);
+      this.execute(command, resultFunction);
     }
     return null;
+  }
+
+   execute(command) {
+
   }
 
   valid(command) {
@@ -21,5 +28,6 @@ class VocalCommandHandler {
       return false;
     }
   }
-
 }
+
+export default VocalCommandHandler;

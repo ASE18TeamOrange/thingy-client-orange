@@ -14,14 +14,14 @@ recognition.lang = "en-US";
 // ------------------------COMPONENT-----------------------------
 
 class VocalCommand extends Component {
-  constructor(thingyAPIClient) {
+  constructor() {
     super();
     this.state = {
       listening: false,
     };
     this.toggleListen = this.toggleListen.bind(this);
     this.handleListen = this.handleListen.bind(this);
-    this.vocalCommandHandler = new VocalCommandHandler(thingyAPIClient);
+    this.vocalCommandHandler = new VocalCommandHandler();
   }
 
   toggleListen() {
