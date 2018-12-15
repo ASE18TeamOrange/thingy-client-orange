@@ -5,10 +5,12 @@ import {BrowserRouter as Router} from "react-router-dom";
 import MediaQuery from "react-responsive";
 import MenuItem from "material-ui/MenuItem";
 import {ToastContainer, toast} from "react-toastify";
+import Login from "../Account/Login";
+import Subscription from "../Account/Subscription";
+import Home from "../Account/Home";
 import AccountContainer from "../../containers/AccountContainer";
 import account from "../../assets/environment.png";
-import SubscriptionContainer from "../../containers/SubscriptionContainer";
-import subscription from "../../assets/environment.png";
+import home from "../../assets/environment.png";
 import VocalCommandContainer from "../../containers/VocalCommandContainer";
 import vocalcommand from "../../assets/environment.png";
 import SpeechSynthContainer from "../../containers/SpeechSynthContainer";
@@ -20,7 +22,6 @@ import SoundContainer from "../../containers/SoundContainer";
 import ConnectButton from "./ConnectButton";
 import APIConnectButton from "./APIConnectButton";
 import Battery from "./Battery";
-import nordiclogo from "../../assets/nordic_logo.png";
 import environment from "../../assets/environment.png";
 import motion from "../../assets/motion.png";
 import ui from "../../assets/ui.png";
@@ -30,7 +31,7 @@ import configuration from "../../assets/configuration.png";
 import sound from "../../assets/sound.png";
 import ifttt from "../../assets/ifttt.png";
 import {LoadingIcon} from "../Common/Common";
-import UpdateFirmware from "./UpdateFirmware";
+
 import BurgerMenu from "./BurgerMenu";
 import {emojify} from "react-emojione";
 import "./styles.css";
@@ -38,6 +39,9 @@ import "./styles.css";
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
+    this.token = localStorage.getItem("token");
+    this.login = localStorage.getItem("user");
+
     this.state = {notification: props.notification, firmware: props.firmware};
     this.onConnectionEvent = this.onConnectionEvent.bind(this);
   }
@@ -98,28 +102,56 @@ class Dashboard extends React.Component {
 
   */
 
-  render() {
-    let routes = "";// <div className="loading_dashboard"><div><h1 id="connect-prompt"> Please connect your Thingy</h1></div></div>;
-    let battery;
-
-    if (this.props.connected) {
+  /*
       if (this.state.firmware === "" || this.state.firmware === undefined) {
         routes = <div className="loading_dashboard"><div><LoadingIcon /></div></div>;
       } else if (this.state.firmware !== "v2.1.0") {
         routes = <div className="loading_dashboard"><div><UpdateFirmware /></div></div>;
-      } else {
-        routes = (
-          <Switch>
-            <Route exact path="/account" component={AccountContainer}/>
-            <Route exact path="/subscription" component={SubscriptionContainer}/>
-            <Route exact path="/vocalcommand" component={VocalCommandContainer}/>
-            <Route exact path="/speechsynth" component={SpeechSynthContainer}/>
-            <Route exact path="/environment" component={EnvironmentContainer}/>
-            <Redirect from="/" to="/environment"/>
-          </Switch>
-        );
-        battery = (<Battery className="battery" batteryLevel={this.props.batteryLevel}/>);
       }
+      */
+
+  render() {
+    let routes = "";// <div className="loading_dashboard"><div><h1 id="connect-prompt"> Please connect your Thingy</h1></div></div>;
+    let battery;
+    let navigation = "";
+    if (this.token !== null && this.token !== "") {
+      routes = (
+        <Switch>
+          <Route exact path="/home" component={Home}/>
+          <Route exact path="/account" component={AccountContainer}/>
+          <Route exact path="/vocalcommand" component={VocalCommandContainer}/>
+          <Route exact path="/speechsynth" component={SpeechSynthContainer}/>
+          <Route exact path="/environment" component={EnvironmentContainer}/>
+          <Redirect from="/" to="/account"/>
+        </Switch>
+      );
+      battery = (<Battery className="battery" batteryLevel={this.props.batteryLevel}/>);
+      navigation = (
+        <div className="menu">
+          <ul>
+            <NavLink to="/account" className="menuLink"><MenuItem className="menuItem" ><img src={account} />Account</MenuItem></NavLink>
+            <NavLink to="/vocalcommand" className="menuLink"><MenuItem className="menuItem" ><img src={vocalcommand} />VocalCommand</MenuItem></NavLink>
+            <NavLink to="/speechsynth" className="menuLink"><MenuItem className="menuItem" ><img src={speechsynth} />SpeechSynth</MenuItem></NavLink>
+            <NavLink to="/environment" className="menuLink"><MenuItem className="menuItem" ><img src={environment} />Environment</MenuItem></NavLink>
+          </ul>
+        </div>);
+    } else {
+      routes = (
+        <Switch>
+          <Route exact path="/home" component={Home}/>
+          <Route exact path="/login" component={Login}/>
+          <Route exact path="/subscribe" component={Subscription}/>
+          <Route exact path="/account" component={AccountContainer}/>
+          <Redirect from="/" to="/home"/>
+        </Switch>
+      );
+      battery = (<Battery className="battery" batteryLevel={this.props.batteryLevel}/>);
+      navigation = (
+        <div className="menu">
+          <ul>
+            <NavLink to="/home" className="menuLink"><MenuItem className="menuItem" ><img src={home} />Home</MenuItem></NavLink>
+          </ul>
+        </div>);
     }
 
     /*
@@ -142,14 +174,7 @@ class Dashboard extends React.Component {
       <Router>
         <div id="dashboard">
           <MediaQuery minWidth={705}>
-            <div className="menu">
-              <ul>
-                <NavLink to="/account" className="menuLink"><MenuItem className="menuItem" ><img src={account} />Account</MenuItem></NavLink>
-                <NavLink to="/vocalcommand" className="menuLink"><MenuItem className="menuItem" ><img src={vocalcommand} />VocalCommand</MenuItem></NavLink>
-                <NavLink to="/speechsynth" className="menuLink"><MenuItem className="menuItem" ><img src={speechsynth} />SpeechSynth</MenuItem></NavLink>
-                <NavLink to="/environment" className="menuLink"><MenuItem className="menuItem" ><img src={environment} />Environment</MenuItem></NavLink>
-              </ul>
-            </div>
+            {navigation}
           </MediaQuery>
 
           <div>
@@ -161,7 +186,6 @@ class Dashboard extends React.Component {
                 <h1>{emojify("OrangeWebApp", {style: {width: "24px", height: "24px"}})}</h1>
                 {battery}
               </div>
-              <APIConnectButton disconnect={this.props.disconnect} notifyError={this.props.notifyError} />
 
               <ConnectButton onConnectionEvent={this.onConnectionEvent} disconnect={this.props.disconnect} notifyError={this.props.notifyError} connected={this.props.connected}/>
 

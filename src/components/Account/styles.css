@@ -1,0 +1,44 @@
+#main_view #account {
+    flex-direction: column;
+}
+
+#main_view form label {
+     width: 200px;
+     display: block;
+     margin-bottom: 5px;
+}
+
+#main_view form input {
+    margin-bottom: 5px;
+}
+
+.box {
+    margin: 5px 0 5px 0;
+    display: block;
+}
+
+#main_view #account button {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+#main_view #account #delete button {
+    background-color: #f44336;
+
+}
+#main_view #account #logout button {
+    background-color: #555555;
+}
+
+.buttonWrapper {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
