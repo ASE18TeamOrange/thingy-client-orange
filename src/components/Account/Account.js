@@ -39,8 +39,8 @@ class Account extends React.Component {
   }
 
   getUserProfileResult(data, response) {
-    console.log(data);
-    alert(data);
+    console.log(data.message);
+    alert(data.message);
   }
 
   submitThingyName() {
@@ -48,8 +48,8 @@ class Account extends React.Component {
   }
 
   setThingyResult(data, response) {
-    console.log(data);
-    alert(data);
+    console.log(data.message);
+    alert(data.message);
   }
 
   updateThingy(value) {

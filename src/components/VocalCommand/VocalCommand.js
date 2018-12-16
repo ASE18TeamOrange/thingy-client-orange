@@ -52,23 +52,29 @@ class VocalCommand extends Component {
 
     let finalTranscript = "";
     recognition.onresult = (event) => {
-      for (let i = event.resultIndex; i < event.results.length; ++i) {
-        if (event.results[i].isFinal) {
-          finalTranscript = event.results[i][0].transcript.trim();
-          this.vocalCommandHandler.handle(finalTranscript);
-        }
-      }
-      console.info(`You said : ${finalTranscript}`);
-
-      //let interimTranscript = "";
-
-      //for (let i = event.resultIndex; i < event.results.length; i++) {
-      //  const transcript = event.results[i][0].transcript;
-      //  if (event.results[i].isFinal) finalTranscript += transcript + " ";
-      //  else interimTranscript += transcript;
+      //for (let i = event.resultIndex; i < event.results.length; ++i) {
+      //  if (event.results[i].isFinal) {
+      //  }
       //}
-      //document.getElementById("interim").innerHTML = interimTranscript;
-      //document.getElementById("final").innerHTML = finalTranscript;
+
+      let interimTranscript = "";
+
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) finalTranscript += transcript + " ";
+        else interimTranscript += transcript;
+      }
+
+      this.vocalCommandHandler.handle(
+        finalTranscript,
+        localStorage.getItem("user"),
+        localStorage.getItem("password"),
+        localStorage.getItem("token"), this.result.bind(this));
+
+      finalTranscript = "";
+
+      document.getElementById('interim').innerHTML = interimTranscript;
+      document.getElementById('final').innerHTML = finalTranscript;
       // -------------------------COMMANDS------------------------------------
 
       const transcriptArr = finalTranscript.split(" ");
@@ -84,11 +90,14 @@ class VocalCommand extends Component {
         };
       }
     };
-
     // -----------------------------------------------------------------------
     recognition.onerror = (event) => {
       console.log("Error occurred in recognition: " + event.error);
     };
+  }
+
+  result(data, response) {
+    console.log(data.message);
   }
 
   render() {

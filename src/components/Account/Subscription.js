@@ -8,8 +8,8 @@ class Subscription extends React.Component {
     super(props)
     this.userClient = userClient;
     this.state = {
-      login: null,
-      password: null,
+      login: "",
+      password: "",
       fireRedirect: false,
     };
   }
@@ -31,7 +31,7 @@ class Subscription extends React.Component {
   }
 
   subscribe(data, response) {
-    alert(data);
+    alert(data.message);
     this.setState({
       fireRedirect: true,
     });

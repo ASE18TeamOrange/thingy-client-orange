@@ -9,8 +9,8 @@ class Login extends React.Component {
     this.userClient = userClient;
 
     this.state = {
-      login: null,
-      password: null,
+      login: "",
+      password: "",
       fireRedirect: false,
     };
   }
@@ -32,22 +32,17 @@ class Login extends React.Component {
   }
 
   loginResult(data, response) {
-
     if (response.statusCode === 200) {
       localStorage.setItem("user", this.state.login);
       localStorage.setItem("password", this.state.password);
       localStorage.setItem("token", data.token);
       window.location.reload();
     } else {
-      alert("wrong password or username");
+      alert(data.message);
     }
   }
 
   render() {
-    const redirect = /*this.state.fireRedirect ? (<Redirect to={{
-      pathname: "/account",
-      state: {login: this.state.login},
-    }} push={true}/>) :*/ "";
     return (
       <div id="account">
         <h3>Login</h3>
@@ -84,7 +79,6 @@ class Login extends React.Component {
             </li>
           </ul>
         </div>
-        {redirect}
       </div>
     );
   }
