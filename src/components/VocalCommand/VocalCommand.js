@@ -52,10 +52,10 @@ class VocalCommand extends Component {
 
     let finalTranscript = "";
     recognition.onresult = (event) => {
-      //for (let i = event.resultIndex; i < event.results.length; ++i) {
-      //  if (event.results[i].isFinal) {
-      //  }
-      //}
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+        }
+      }
 
       let interimTranscript = "";
 
@@ -65,21 +65,22 @@ class VocalCommand extends Component {
         else interimTranscript += transcript;
       }
 
-      this.vocalCommandHandler.handle(
-        finalTranscript,
-        localStorage.getItem("user"),
-        localStorage.getItem("password"),
-        localStorage.getItem("token"), this.result.bind(this));
 
-      finalTranscript = "";
-
-      document.getElementById('interim').innerHTML = interimTranscript;
-      document.getElementById('final').innerHTML = finalTranscript;
+      document.getElementById("interim").innerHTML = interimTranscript;
+      document.getElementById("final").innerHTML = finalTranscript;
       // -------------------------COMMANDS------------------------------------
 
       const transcriptArr = finalTranscript.split(" ");
       const stopCmd = transcriptArr.slice(-3, -1);
       console.log("stopCmd", stopCmd);
+
+      if (this.vocalCommandHandler.valid(stopCmd[0])) {
+        this.vocalCommandHandler.handle(
+          stopCmd[0],
+          localStorage.getItem("user"),
+          localStorage.getItem("password"),
+          localStorage.getItem("token"), this.result.bind(this));
+      }
 
       if (stopCmd[0] === "stop" && stopCmd[1] === "listening") {
         recognition.stop();
@@ -92,7 +93,7 @@ class VocalCommand extends Component {
     };
     // -----------------------------------------------------------------------
     recognition.onerror = (event) => {
-      console.log("Error occurred in recognition: " + event.error);
+      //console.log("Error occurred in recognition: " + event.error);
     };
   }
 

@@ -16,21 +16,8 @@ import vocalcommand from "../../assets/environment.png";
 import SpeechSynthContainer from "../../containers/SpeechSynthContainer";
 import speechsynth from "../../assets/environment.png";
 import EnvironmentContainer from "../../containers/EnvironmentContainer";
-import MotionContainer from "../../containers/MotionContainer";
-import UIContainer from "../../containers/UIContainer";
-import SoundContainer from "../../containers/SoundContainer";
-import ConnectButton from "./ConnectButton";
 import Battery from "./Battery";
 import environment from "../../assets/environment.png";
-import motion from "../../assets/motion.png";
-import ui from "../../assets/ui.png";
-import ConfigurationContainer from "../../containers/ConfigurationContainer";
-import IFTTTContainer from "../../containers/IFTTTContainer";
-import configuration from "../../assets/configuration.png";
-import sound from "../../assets/sound.png";
-import ifttt from "../../assets/ifttt.png";
-import {LoadingIcon} from "../Common/Common";
-
 import BurgerMenu from "./BurgerMenu";
 import {emojify} from "react-emojione";
 import "./styles.css";
@@ -46,11 +33,6 @@ class Dashboard extends React.Component {
   }
 
   componentWillReceiveProps(np) {
-    if (np.firmware !== this.state.firmware) {
-      this.setState({
-        firmware: np.firmware,
-      });
-    }
     if (np.notification !== this.state.notification) {
       this.setState({
         notification: np.notification,
@@ -91,26 +73,8 @@ class Dashboard extends React.Component {
     }
   }
 
-  /*
-
-            <Route exact path="/motion" component={MotionContainer} />
-            <Route exact path="/ui" component={UIContainer} />
-            <Route exact path="/configuration" component={ConfigurationContainer} />
-            <Route exact path="/sound" component={SoundContainer} />
-            <Route exact path="/ifttt" component={IFTTTContainer} />
-
-  */
-
-  /*
-      if (this.state.firmware === "" || this.state.firmware === undefined) {
-        routes = <div className="loading_dashboard"><div><LoadingIcon /></div></div>;
-      } else if (this.state.firmware !== "v2.1.0") {
-        routes = <div className="loading_dashboard"><div><UpdateFirmware /></div></div>;
-      }
-      */
-
   render() {
-    let routes = "";// <div className="loading_dashboard"><div><h1 id="connect-prompt"> Please connect your Thingy</h1></div></div>;
+    let routes = "";
     let battery;
     let navigation = "";
     if (this.token !== null && this.token !== "") {
@@ -153,22 +117,6 @@ class Dashboard extends React.Component {
         </div>);
     }
 
-    /*
-    <div className="menu">
-              <!-- img className="logo" src={nordiclogo} / -->
-              <ul>
-                <NavLink to="/account" className="menuLink"><MenuItem className="menuItem" ><img src={account} />Account</MenuItem></NavLink>
-                <NavLink to="/vocalcommand" className="menuLink"><MenuItem className="menuItem" ><img src={vocalcommand} />VocalCommand</MenuItem></NavLink>
-                <NavLink to="/speechsynth" className="menuLink"><MenuItem className="menuItem" ><img src={speechsynth} />SpeechSynth</MenuItem></NavLink>
-                <NavLink to="/environment" className="menuLink"><MenuItem className="menuItem" ><img src={environment} />Environment</MenuItem></NavLink>
-                <!-- NavLink to="/motion" className="menuLink" activeClassName="active"><MenuItem className="menuItem" ><img src={motion} />Motion</MenuItem></NavLink-->
-                <!-- NavLink to="/ui" className="menuLink"><MenuItem className="menuItem" ><img src={ui} />UI</MenuItem></NavLink-->
-                <!--NavLink to="/configuration" className="menuLink"><MenuItem className="menuItem" ><img src={configuration} />Configuration</MenuItem></NavLink-->
-                <!--NavLink to="/sound" className="menuLink"><MenuItem className="menuItem" ><img src={sound} />Sound</MenuItem></NavLink-->
-                <!-- NavLink to="/ifttt" className="menuLink"><MenuItem className="menuItem" ><img src={ifttt} />IFTTT</MenuItem></NavLink-->
-              </ul>
-            </div>
-    */
     return (
       <Router>
         <div id="dashboard">
@@ -185,9 +133,6 @@ class Dashboard extends React.Component {
                 <h1>{emojify("OrangeWebApp", {style: {width: "24px", height: "24px"}})}</h1>
                 {battery}
               </div>
-
-              <ConnectButton onConnectionEvent={this.onConnectionEvent} disconnect={this.props.disconnect} notifyError={this.props.notifyError} connected={this.props.connected}/>
-
             </div>
           </div>
           <div id="main_view">

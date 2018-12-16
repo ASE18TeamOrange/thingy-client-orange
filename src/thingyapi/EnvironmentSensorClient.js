@@ -5,4 +5,4 @@ const client = new Client();
 const apiurl = "http://localhost:8081/";
 const environmentSensorClient = new EnvironmentSensorRequests(client, apiurl);
 
-export default {environmentSensorClient};
+export default environmentSensorClient;

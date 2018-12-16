@@ -167,29 +167,10 @@ class Configuration extends React.Component {
     let c;
     let oc;
     switch (content) {
-    case "name":
-      c = <Name name={this.props.name.name} onChange={this.handleNameChange.bind(this)}/>;
-      oc = this.handleNameSubmit.bind(this);
-      break;
-
-    case "advertising":
-      c = <AdvertisingParams advertisingparameters={this.props.advertisingparameters} onChange={this.handleAdvertisingChange.bind(this)}/>;
-      oc = this.handleAdvertisingSubmit.bind(this);
-      break;
 
     case "connection":
       c = <ConnectionParams connectionparameters={this.props.connectionparameters} onChange={this.handleConnectionChange.bind(this)}/>;
       oc = this.handleConnectionSubmit.bind(this);
-      break;
-
-    case "eddystone":
-      c = <Eddystone eddystone={this.props.eddystone} onChange={this.handleEddystoneChange.bind(this)}/>;
-      oc = this.handleEddystoneSubmit.bind(this);
-      break;
-
-    case "cloudtoken":
-      c = <CloudToken cloudtoken={this.props.cloudtoken} onChange={this.handleCloudtokenChange.bind(this)}/>;
-      oc = this.handleCloudtokenSubmit.bind(this);
       break;
 
 
@@ -198,15 +179,6 @@ class Configuration extends React.Component {
       oc = this.handleEnvironmentSubmit.bind(this);
       break;
 
-    case "motion":
-      c = <MotionSensorIntervals motionconfiguration={this.props.motionconfiguration} onChange={this.handleMotionChange.bind(this)} />;
-      oc = this.handleMotionSubmit.bind(this);
-      break;
-
-    case "ifttt":
-      c = <Ifttt iftttKey={this.props.iftttKey} onChange={this.handleIFTTTChange.bind(this)} />;
-      oc = this.handleIFTTTSubmit.bind(this);
-      break;
 
     default:
       c = null;
@@ -233,14 +205,8 @@ class Configuration extends React.Component {
       <div id="configuration">
         <h3> Configuration </h3>
         <span id="firmwareLabel">{`Firmware version ${this.props.firmware}`}</span>
-        <p className="component" onClick={() => this.openPopup("name")}><img src={namelabel} alt="name" />Thingy name</p>
-        <p className="component" onClick={() => this.openPopup("advertising")}><img src={advertising} alt="name" />Advertising parameters</p>
         <p className="component" onClick={() => this.openPopup("connection")}><img src={connection} alt="name" />Connection parameters</p>
-        <p className="component" onClick={() => this.openPopup("eddystone")}><img src={eddystone} alt="name" />Eddystone URL</p>
-        <p className="component" onClick={() => this.openPopup("cloudtoken")}><img src={cloudtoken} alt="name" />Cloud token</p>
         <p className="component" onClick={() => this.openPopup("environment")}><img src={environment} alt="name" />Environment sensors</p>
-        <p className="component" onClick={() => this.openPopup("motion")}><img src={motion} alt="name" />Motion sensors</p>
-        <p className="component" onClick={() => this.openPopup("ifttt")}><img src={ifttt} alt="name" />IFTTT</p>
 
         {
           this.state.popupOpen ? (

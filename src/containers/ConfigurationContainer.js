@@ -6,13 +6,11 @@ const mapStateToProps = ({misc}) => {
   return ({
     firmware: misc.firmware.reading.firmware,
     name: misc.name.reading,
-    advertisingparameters: misc.advertisingparameters.reading,
+
     connectionparameters: misc.connectionparameters.reading,
-    eddystone: misc.eddystone.reading,
-    cloudtoken: misc.cloudtoken.reading,
+
     environmentconfiguration: misc.environmentconfiguration.reading,
-    motionconfiguration: misc.motionconfiguration.reading,
-    iftttKey: misc.ifttt.key,
+
   });
 };
 

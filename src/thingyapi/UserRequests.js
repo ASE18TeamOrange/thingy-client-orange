@@ -9,7 +9,7 @@ class UserRequests {
   registerMethods() {
     this.client.registerMethod("loginUser", this.route, "POST");
     this.client.registerMethod("logoutUser", this.route, "POST");
-    this.client.registerMethod("getUserProfile", this.route+"${login}/", "GET");
+    this.client.registerMethod("getUserProfile", this.route+"${login}", "GET");
     this.client.registerMethod("setThingy", this.route, "POST");
     this.client.registerMethod("getUser", this.route, "GET");
     this.client.registerMethod("registerUser", this.route, "POST");
@@ -35,7 +35,7 @@ class UserRequests {
   }
 
   getUserProfile(login, f, token) {
-    this.client.methods.logoutUser(
+    this.client.methods.getUserProfile(
       {
         path: {context: "user", login: login},
         headers: {"Content-Type": "application/json", authorization: token},

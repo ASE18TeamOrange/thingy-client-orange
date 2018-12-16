@@ -1,36 +1,37 @@
-import environmentSensorClient from "../../thingyapi/EnvironmentSensorClient";
+import client from "../../thingyapi/EnvironmentSensorClient";
 
 class VocalCommandHandler {
-  constructor(client) {
-    this.commandWords = ["get temperature",
-      "last temperature",
-      "log temperature",
-      "delete log temperature",
-      "get humidity",
-      "last humidity",
-      "log humidity",
-      "delete log humidity",
-      "get gas",
-      "last gas",
-      "log gas",
-      "delete log gas",
-      "get light",
-      "last light",
-      "log light",
-      "delete log light"];
-    this.client = environmentSensorClient.environmentSensorClient;
+  constructor() {
+    this.client = client.environmentSensorClient;
+    this.commandWords = ['test', 'get temperature',
+      'last temperature',
+      'log temperature',
+      'delete log temperature',
+      'get humidity',
+      'last humidity',
+      'log humidity',
+      'delete log humidity',
+      'get gas',
+      'last gas',
+      'log gas',
+      'delete log gas',
+      'get light',
+      'last light',
+      'log light',
+      'delete log light'];
   }
 
   // @todo add promise
   handle(command, login, password, token, f) {
-    if (this.valid(command)) {
-      this.execute(command, login, password, token, f);
-    }
-    return null;
+    this.execute(command, login, password, token, f);
   }
 
   execute(command, login, password, token, f) {
-    switch (command) {
+    console.log("execute: " + command);
+    const someObject = String(command);
+    const someString = someObject.toString();
+    switch (someString) {
+    case "test": this.client.getTemperature(login, password, token, f); break;
     case "get temperature": this.client.getTemperature(login, password, token, f); break;
     case "last temperature": this.client.getLastTemperature(login, password, token, f); break;
     case "log temperature": this.client.logTemperature(login, password, token, f); break;
@@ -47,17 +48,18 @@ class VocalCommandHandler {
     case "last light": this.client.getLastLight(login, password, token, f); break;
     case "log light": this.client.logLight(login, password, token, f); break;
     case "delete log light": this.client.deleteLogLight(login, password, token, f); break;
-    default: break;
+    default: console.log("got problem in switch"); break;
     }
   }
 
   valid(command) {
-    if (this.commandWords.includes(command.toLocaleLowerCase())) {
-      return true;
-    } else {
-      console.log("error, said: " + command.toLocaleString());
-      return false;
+    if (command === null || command === "") return false;
+    let index;
+    for (index = 0; index < this.commandWords.length; index++) {
+      if (this.commandWords[index] === command) return true;
     }
+    console.log("error, command is: " + command);
+    return false;
   }
 }
 

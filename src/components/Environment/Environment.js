@@ -1,69 +1,64 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Card, CardStandardCodeView} from "../Common/Common";
-import {CardChartView, CardColorView} from "./EnvironmentCards";
+
+import {Card} from "../Common/Common";
+import {CardChartView} from "./EnvironmentCards";
 import "./styles.css";
+import EnvironmentService from "./EnvironmentService";
+import envClient from "../../thingyapi/EnvironmentSensorClient";
 
 class Environment extends React.Component {
   constructor(props) {
     super(props);
 
+    this.service = new EnvironmentService();
+    this.service.setClient(envClient);
+    this.service.setEnvironment(this);
+
     this.state = {
       temperature: props.temperature,
       pressure: props.pressure,
       co2: props.co2,
-      tvoc: props.tvoc,
       humidity: props.humidity,
       color: props.color,
     };
 
-    this.toggleTemperature = props.toggleTemperature;
-    this.togglePressure = props.togglePressure;
-    this.toggleCo2 = props.toggleCo2;
-    this.toggleTvoc = props.toggleTvoc;
-    this.toggleHumidity = props.toggleHumidity;
-    this.toggleColor = props.toggleColor;
-
     this.changeTab = props.changeTab;
+
+    this.service.readingRoutine("temperature");
+    this.service.readingRoutine("pressure");
+    this.service.readingRoutine("humidity");
+    this.service.readingRoutine("gas");
   }
 
-  componentWillReceiveProps(np) {
-    if (np.temperature !== this.state.temperature) {
-      this.setState({
-        temperature: np.temperature,
-      });
-    }
+  pressureUpdate(value) {
+    this.setState({
+      pressure: value,
+    });
+  }
 
-    if (np.pressure !== this.state.pressure) {
-      this.setState({
-        pressure: np.pressure,
-      });
-    }
+  temperatureUpdate(value) {
+    this.setState({
+      temperature: value,
+    });
+  }
 
-    if (np.co2 !== this.state.co2) {
-      this.setState({
-        co2: np.co2,
-      });
-    }
+  gasUpdate(value) {
+    this.setState({
+      co2: value,
+    });
+  }
 
-    if (np.tvoc !== this.state.tvoc) {
-      this.setState({
-        tvoc: np.tvoc,
-      });
-    }
+  humidityUpdate(value) {
+    this.setState({
+      humidity: value,
+    });
+  }
 
-    if (np.humidity !== this.state.humidity) {
-      this.setState({
-        humidity: np.humidity,
-      });
-    }
-
-
-    if (np.color !== this.state.color) {
-      this.setState({
-        color: np.color,
-      });
-    }
+  lightUpdate(value) {
+    this.setState({
+      color: value,
+    });
   }
 
   componentDidMount() {
@@ -77,34 +72,23 @@ class Environment extends React.Component {
   render() {
     return (
       <div>
-        <Card name="temperature" changeTab={this.changeTab} toggleFeature={this.toggleTemperature} tab={this.state.temperature.activeTab}>
-          {(!this.state.temperature.activeTab || this.state.temperature.activeTab === "feature") && <CardChartView feature={this.state.temperature} />}
-          {this.state.temperature.activeTab === "code" && <CardStandardCodeView code="temperature" feature={this.state.temperature} featureMode="notify"/>}
+        <Card name="temperature" changeTab={this.changeTab}>
+          {<CardChartView feature={this.state.temperature} />}
         </Card>
 
-        <Card name="pressure" changeTab={this.changeTab} toggleFeature={this.togglePressure} tab={this.state.pressure.activeTab}>
-          {(!this.state.pressure.activeTab || this.state.pressure.activeTab === "feature") && <CardChartView feature={this.state.pressure} />}
-          {this.state.pressure.activeTab === "code" && <CardStandardCodeView code="pressure" feature={this.state.pressure} featureMode="notify"/>}
+        <Card name="pressure" changeTab={this.changeTab}  >
+          { <CardChartView feature={this.state.pressure} />}
+
         </Card>
 
-        <Card name="humidity" changeTab={this.changeTab} toggleFeature={this.toggleHumidity} tab={this.state.humidity.activeTab}>
-          {(!this.state.humidity.activeTab || this.state.humidity.activeTab === "feature") && <CardChartView feature={this.state.humidity} />}
-          {this.state.humidity.activeTab === "code" && <CardStandardCodeView code="pressure" feature={this.state.humidity} featureMode="notify"/>}
+        <Card name="humidity" changeTab={this.changeTab}  >
+          { <CardChartView feature={this.state.humidity} />}
+
         </Card>
 
-        <Card name="CO2" interactionName="co2" changeTab={this.changeTab} toggleFeature={this.toggleCo2} tab={this.state.co2.activeTab}>
-          {this.state.co2 && (!this.state.co2.activeTab || this.state.co2.activeTab === "feature") && <CardChartView feature={this.state.co2} />}
-          {this.state.co2 && this.state.co2.activeTab && this.state.co2.activeTab === "code" && <CardStandardCodeView code="gas" feature={this.state.co2} featureMode="notify"/>}
-        </Card>
+        <Card name="CO2" interactionName="co2" changeTab={this.changeTab} >
+          { <CardChartView feature={this.state.co2} />}
 
-        <Card name="color" changeTab={this.changeTab} toggleFeature={this.toggleColor} tab={this.state.color.activeTab}>
-          {(!this.state.color.activeTab || this.state.color.activeTab === "feature") && <CardColorView color={this.state.color} />}
-          {this.state.color.activeTab === "code" && <CardStandardCodeView code="color" feature={this.state.color} featureMode="notify"/>}
-        </Card>
-
-        <Card name="TVOC" interactionName="tvoc" changeTab={this.changeTab} toggleFeature={this.toggleTvoc} tab={this.state.tvoc.activeTab}>
-          {this.state.tvoc && (!this.state.tvoc.activeTab || this.state.tvoc.activeTab === "feature") && <CardChartView feature={this.state.tvoc} />}
-          {this.state.tvoc && this.state.tvoc.activeTab && this.state.tvoc.activeTab === "code" && <CardStandardCodeView code="gas" feature={this.state.tvoc} featureMode="notify"/>}
         </Card>
       </div>
     );
@@ -117,15 +101,7 @@ Environment.propTypes = {
   humidity: PropTypes.object,
   co2: PropTypes.object,
   color: PropTypes.object,
-  tvoc: PropTypes.object,
   changeTab: PropTypes.func,
-  toggleTemperature: PropTypes.func,
-  togglePressure: PropTypes.func,
-  toggleCo2: PropTypes.func,
-  toggleTvoc: PropTypes.func,
-  toggleHumidity: PropTypes.func,
-  toggleColor: PropTypes.func,
-  toggleAll: PropTypes.func,
 };
 
 export default Environment;
