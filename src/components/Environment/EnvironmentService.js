@@ -111,10 +111,9 @@ class EnvironmentService {
   }
 
   getLastTemperatureResult(data, response) {
-    if (response.statusCode >= 400) {
+    if (response.statusCode >= 400 || data === null) {
       this.setStopTemp(true);
-    }
-    this.updateTemperature(data.temperature);
+    } else this.updateTemperature(data.temperature);
   }
 
   getLastHumidity() {
@@ -122,10 +121,9 @@ class EnvironmentService {
   }
 
   getLastHumidityResult(data, response) {
-    if (response.statusCode >= 400) {
+    if (response.statusCode >= 400 || data === null) {
       this.setStopHumidity(true);
-    }
-    this.updateHumidity(data.humidity);
+    } else this.updateHumidity(data.humidity);
   }
 
   getLastGas() {
@@ -133,10 +131,9 @@ class EnvironmentService {
   }
 
   getLastGasResult(data, response) {
-    if (response.statusCode >= 400) {
+    if (response.statusCode >= 400 || data === null) {
       this.setStopGas(true);
-    }
-    this.updateGas(data.gas.eco2);
+    } else this.updateGas(data.gas.eco2);
   }
 
   getLastLight() {
@@ -152,10 +149,9 @@ class EnvironmentService {
   }
 
   getLastPressureResult(data, response) {
-    if (response.statusCode >= 400) {
+    if (response.statusCode >= 400 || data === null) {
       this.setStopPressure(true);
-    }
-    this.updatePressure(data.pressure);
+    } else this.updatePressure(data.pressure);
   }
 }
 

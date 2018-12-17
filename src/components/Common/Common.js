@@ -50,39 +50,3 @@ export const LoadingIcon = () => (
     </div>
   </div>
 );
-
-
-export class Input extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      input: "",
-      inputLength: 0,
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.onChange = props.onChange;
-    this.maxLength = props.maxLength || 20;
-    this.placeholder = props.placeholder;
-    this.size = "input_" + (["small", "medium", "large"].includes(props.size) ? props.size : "medium");
-  }
-
-  handleChange(event) {
-    this.setState({
-      input: event.target.value,
-      inputLength: event.target.value.length,
-    }, () => {
-      this.onChange(this.state.input);
-    });
-  }
-
-  render() {
-    return (
-      <div className={`input ${this.size}`}>
-        <input onChange={this.handleChange} maxLength={this.maxLength} placeholder={this.placeholder} />
-        {this.props.counter && <span>{`${this.state.inputLength}/${this.maxLength}`}</span>}
-      </div>
-    );
-  }
-}

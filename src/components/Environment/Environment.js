@@ -25,10 +25,14 @@ class Environment extends React.Component {
 
     this.changeTab = props.changeTab;
 
-    this.service.readingRoutine("temperature");
-    this.service.readingRoutine("pressure");
-    this.service.readingRoutine("humidity");
-    this.service.readingRoutine("gas");
+    if (localStorage.getItem("log_temp") === "true")
+      this.service.readingRoutine("temperature");
+    if (localStorage.getItem("log_pressure") === "true")
+      this.service.readingRoutine("pressure");
+    if (localStorage.getItem("log_humidity") === "true")
+      this.service.readingRoutine("humidity");
+    if (localStorage.getItem("log_gas") === "true")
+      this.service.readingRoutine("gas");
   }
 
   pressureUpdate(value) {
@@ -73,21 +77,20 @@ class Environment extends React.Component {
     return (
       <div>
         <Card name="temperature" changeTab={this.changeTab}>
-          {<CardChartView feature={this.state.temperature} />}
+          {<CardChartView feature={this.state.temperature} unit={"Celsius"} />}
         </Card>
 
-        <Card name="pressure" changeTab={this.changeTab}  >
-          { <CardChartView feature={this.state.pressure} />}
-
-        </Card>
-
-        <Card name="humidity" changeTab={this.changeTab}  >
-          { <CardChartView feature={this.state.humidity} />}
+        <Card name="pressure" changeTab={this.changeTab}>
+          { <CardChartView feature={this.state.pressure} unit={"Pa"} />}
 
         </Card>
 
-        <Card name="CO2" interactionName="co2" changeTab={this.changeTab} >
-          { <CardChartView feature={this.state.co2} />}
+        <Card name="humidity" changeTab={this.changeTab}>
+          { <CardChartView feature={this.state.humidity} unit={"Rh"} />}
+        </Card>
+
+        <Card name="CO2" changeTab={this.changeTab} >
+          { <CardChartView feature={this.state.co2} unit={"ppmv"}/>}
 
         </Card>
       </div>

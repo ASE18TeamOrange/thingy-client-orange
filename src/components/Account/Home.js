@@ -22,27 +22,42 @@ class Home extends React.Component {
     return (
       <div id="account">
         <h3>Wellcome, Orange Thingy API Webapp</h3>
-        <h4>Configuration</h4>
-        <div className="box">
-          <p>please write the Orange Thingy API</p>
-          <label>Url: </label> <input
-            type="text"
-            onChange={(event) => {
-              this.updateApiUrl(event.target.value);
-            }}
-            value={this.state.standardApiUrl}
-          /><br/>
-        </div>
-        <h4>please subscribe for a new account or login</h4>
-        <div className="box">
+        <div className="card">
           <ul>
             <li>
-              <NavLink to="/login">Login</NavLink>
-            </li>
-            <li>
-              <NavLink to="/subscribe">Subscribe</NavLink>
+              <span>Configuration</span>
             </li>
           </ul>
+          <div className="box card_content_container">
+            <p>please write the Orange Thingy API</p>
+            <label>Url: </label> <input
+              type="text"
+              onChange={(event) => {
+                this.updateApiUrl(event.target.value);
+              }}
+              value={this.state.standardApiUrl}
+            /><br/>
+          </div>
+        </div>
+        <div className="card">
+          <ul>
+            <li>
+              <span>Please subscribe for a new account or login</span>
+            </li>
+          </ul>
+          <div className="box card_content_container">
+            <ul>
+              <li>
+                <NavLink to="/login">Login</NavLink>
+              </li>
+              <li>
+                &nbsp;
+              </li>
+              <li>
+                <NavLink to="/subscribe">Subscribe</NavLink>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     );

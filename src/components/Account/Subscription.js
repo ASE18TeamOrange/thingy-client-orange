@@ -42,9 +42,13 @@ class Subscription extends React.Component {
       pathname: "/login",
     }} push={true}/>) : "";
     return (
-      <div id="account">
-        <h3>Signup for an Account here</h3>
-        <div className="box">
+      <div className="card" id="account">
+        <ul>
+          <li>
+            <span>Signup for a new account</span>
+          </li>
+        </ul>
+        <div className="box card_content_container">
           <form>
             <fieldset className="box">
               <label>Name:</label> <input
@@ -69,13 +73,6 @@ class Subscription extends React.Component {
               </button>
             </div>
           </form>
-        </div>
-        <div>
-          <ul>
-            <li>
-              <NavLink to="/home">Home</NavLink>
-            </li>
-          </ul>
         </div>
         {redirect}
       </div>

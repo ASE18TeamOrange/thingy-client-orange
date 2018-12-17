@@ -1,15 +1,18 @@
 import React from "react";
 import {ResponsiveContainer, AreaChart, Area} from "recharts";
 import {LoadingIcon} from "../Common/Common";
+import PropTypes from "prop-types";
+
 
 export class CardChartView extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      latestReading: "23",
+      latestReading: undefined,
       absoluteReadings: [],
       relativeReadings: [],
+      unit: props.unit,
     };
   }
 
@@ -47,7 +50,7 @@ export class CardChartView extends React.Component {
 
         this.setState({
           baseReading: read,
-          unit: "unit",
+          unit: np.unit,
         });
       }
 
@@ -93,3 +96,9 @@ export class CardChartView extends React.Component {
     }
   }
 }
+
+CardChartView.propTypes = {
+  unit: PropTypes.string,
+};
+
+export default CardChartView;

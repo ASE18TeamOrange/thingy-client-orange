@@ -1,8 +1,7 @@
 "use strict";
-import React, {Component} from "react";
+import React from "react";
 import VocalCommandHandler from "./VocalCommandHandler";
-
-// ------------------------SPEECH RECOGNITION-----------------------------
+import PropTypes from "prop-types";
 
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new window.SpeechRecognition();
@@ -11,11 +10,9 @@ recognition.continous = true;
 recognition.interimResults = true;
 recognition.lang = "en-US";
 
-// ------------------------COMPONENT-----------------------------
-
-class VocalCommand extends Component {
-  constructor() {
-    super();
+class VocalCommand extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       listening: false,
     };
@@ -91,10 +88,6 @@ class VocalCommand extends Component {
         };
       }
     };
-    // -----------------------------------------------------------------------
-    recognition.onerror = (event) => {
-      //console.log("Error occurred in recognition: " + event.error);
-    };
   }
 
   result(data, response) {
@@ -104,9 +97,12 @@ class VocalCommand extends Component {
   render() {
     return (
       <div style={container}>
-        <button id='microphone-btn' style={button} onClick={this.toggleListen}/>
-        <div id='interim' style={interim}>&nbsp;</div>
-        <div id='final' style={final}>&nbsp;</div>
+        <div className="box">
+          <button id='microphone-btn' style={button} onClick={this.toggleListen}/>
+          <div id='interim' style={interim}>&nbsp;</div>
+          <div id='final' style={final}>&nbsp;</div>
+        </div>
+
       </div>
     );
   }
@@ -124,25 +120,25 @@ const styles = {
     textAlign: "center",
   },
   button: {
-    width: "60px",
-    height: "60px",
+    width: "30px",
+    height: "30px",
     background: "lightblue",
     borderRadius: "50%",
-    margin: "6em 0 2em 0",
-  },
+  }
+  ,
   interim: {
     color: "gray",
     border: "#ccc 1px solid",
-    padding: "1em",
-    margin: "1em",
-    width: "300px",
+    padding: "0.5em",
+    margin: "0.5em",
+    width: "100px",
   },
   final: {
     color: "black",
     border: "#ccc 1px solid",
-    padding: "1em",
-    margin: "1em",
-    width: "300px",
+    padding: "0.5em",
+    margin: "0.5em",
+    width: "100px",
   },
 };
 

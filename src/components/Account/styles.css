@@ -16,6 +16,10 @@
 
 }
 
+#main_view #account .card_content_container {
+    height: auto;
+}
+
 #main_view p {
     margin-bottom: 5px;
 }
@@ -45,6 +49,11 @@
     display: inline-block;
     font-size: 16px;
     margin-top: 5px;
+    margin-right: 5px;
+}
+
+#main_view #account button#microphone-btn{
+    padding: 0;
 }
 
 #main_view #account #delete button {

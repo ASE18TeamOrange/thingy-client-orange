@@ -8,11 +8,11 @@ class EnvironmentSensorRequests {
   }
 
   registerMethods() {
-    this.client.registerMethod("getTemperature", this.route+"/${login}", "GET");
-    this.client.registerMethod("getPressure", this.route+"/${login}", "GET");
-    this.client.registerMethod("getHumidity", this.route+"/${login}", "GET");
-    this.client.registerMethod("getGas", this.route+"/${login}", "GET");
-    this.client.registerMethod("getLight", this.route+"/${login}", "GET");
+    this.client.registerMethod("getTemperature", this.route+"${login}", "GET");
+    this.client.registerMethod("getPressure", this.route+"${login}", "GET");
+    this.client.registerMethod("getHumidity", this.route+"${login}", "GET");
+    this.client.registerMethod("getGas", this.route+"${login}", "GET");
+    this.client.registerMethod("getLight", this.route+"${login}", "GET");
 
     this.client.registerMethod("getLastTemperature", this.route+"last/${login}", "GET");
     this.client.registerMethod("getLastPressure", this.route+"last/${login}", "GET");

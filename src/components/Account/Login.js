@@ -28,11 +28,16 @@ class Login extends React.Component {
   }
 
   submit() {
-    this.userClient.loginUser(this.state.login, this.state.password, this.loginResult.bind(this));
+    try {
+      this.userClient.loginUser(this.state.login, this.state.password, this.loginResult.bind(this));
+    } catch (e) {
+      localStorage.clear();
+      window.location.reload();
+    }
   }
 
   loginResult(data, response) {
-    if (response.statusCode === 200) {
+    if (response.statusCode < 300) {
       localStorage.setItem("user", this.state.login);
       localStorage.setItem("password", this.state.password);
       localStorage.setItem("token", data.token);
@@ -44,9 +49,13 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div id="account">
-        <h3>Login</h3>
-        <div className="box">
+      <div className="card" id="account">
+        <ul>
+          <li>
+            <span>Login</span>
+          </li>
+        </ul>
+        <div className="box card_content_container">
           <form>
             <fieldset className="box">
               <label>Name: </label> <input
@@ -71,13 +80,6 @@ class Login extends React.Component {
               </button>
             </div>
           </form>
-        </div>
-        <div>
-          <ul>
-            <li>
-              <NavLink to="/home">Home</NavLink>
-            </li>
-          </ul>
         </div>
       </div>
     );
