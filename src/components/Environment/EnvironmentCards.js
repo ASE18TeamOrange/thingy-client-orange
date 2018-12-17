@@ -17,6 +17,7 @@ export class CardChartView extends React.Component {
   }
 
   componentWillReceiveProps(np) {
+    if (np.feature !== this.state.latestReading) {
     const read = np.feature;
     const updatedAbsoluteReadings = Object.assign(this.state.absoluteReadings, []);
     const readingsLength = updatedAbsoluteReadings.length;
@@ -68,14 +69,15 @@ export class CardChartView extends React.Component {
         };
       });
     });
-    // }
+    }
   }
 
   render() {
+    const reading = typeof this.state.latestReading === "number" ? this.state.latestReading : "None";
     if (this.state.absoluteReadings.length >= 2) {
       return (
         <div className="card_chart_view">
-          <p>{`${this.state.latestReading} ${this.state.unit}`}</p>
+          <p>{`${reading} ${this.state.unit}`}</p>
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={this.state.relativeReadings}>
               <defs>

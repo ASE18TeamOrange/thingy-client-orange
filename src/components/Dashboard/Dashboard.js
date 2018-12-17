@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
     this.token = localStorage.getItem("token");
     this.login = localStorage.getItem("user");
 
-    this.state = {notification: props.notification, firmware: props.firmware};
+    this.state = {notification: props.notification};
   }
 
   componentWillReceiveProps(np) {
@@ -106,6 +106,7 @@ class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
   notification: PropTypes.object,
+  batteryLevel: PropTypes.number,
 };
 
 export default Dashboard;

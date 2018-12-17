@@ -65,33 +65,20 @@ class Environment extends React.Component {
     });
   }
 
-  componentDidMount() {
-    this.props.toggleAll("on");
-  }
-
-  componentWillUnmount() {
-    this.props.toggleAll("off");
-  }
-
   render() {
     return (
       <div>
         <Card name="temperature" changeTab={this.changeTab}>
           {<CardChartView feature={this.state.temperature} unit={"Celsius"} />}
         </Card>
-
-        <Card name="pressure" changeTab={this.changeTab}>
-          { <CardChartView feature={this.state.pressure} unit={"Pa"} />}
-
-        </Card>
-
         <Card name="humidity" changeTab={this.changeTab}>
-          { <CardChartView feature={this.state.humidity} unit={"Rh"} />}
+          {<CardChartView feature={this.state.humidity} unit={"Rh"} />}
         </Card>
-
-        <Card name="CO2" changeTab={this.changeTab} >
-          { <CardChartView feature={this.state.co2} unit={"ppmv"}/>}
-
+        <Card name="pressure" changeTab={this.changeTab}>
+          {<CardChartView feature={this.state.pressure} unit={"Pa"} />}
+        </Card>
+        <Card name="CO2" changeTab={this.changeTab}>
+          {<CardChartView feature={this.state.co2} unit={"ppmv"}/>}
         </Card>
       </div>
     );

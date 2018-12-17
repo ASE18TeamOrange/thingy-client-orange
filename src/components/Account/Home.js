@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.css";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 class Home extends React.Component {
   constructor(props) {
@@ -15,30 +15,13 @@ class Home extends React.Component {
     this.setState({
       standardApiUrl: value,
     });
-    //localStorage.setItem("apiUrl", value);
+    localStorage.setItem("apiUrl", value);
   }
 
   render() {
     return (
       <div id="account">
         <h3>Wellcome, Orange Thingy API Webapp</h3>
-        <div className="card">
-          <ul>
-            <li>
-              <span>Configuration</span>
-            </li>
-          </ul>
-          <div className="box card_content_container">
-            <p>please write the Orange Thingy API</p>
-            <label>Url: </label> <input
-              type="text"
-              onChange={(event) => {
-                this.updateApiUrl(event.target.value);
-              }}
-              value={this.state.standardApiUrl}
-            /><br/>
-          </div>
-        </div>
         <div className="card">
           <ul>
             <li>
@@ -57,6 +40,24 @@ class Home extends React.Component {
                 <NavLink to="/subscribe">Subscribe</NavLink>
               </li>
             </ul>
+          </div>
+        </div>
+        <div className="card">
+          <ul>
+            <li>
+              <span>API Url</span>
+            </li>
+          </ul>
+          <div className="box card_content_container">
+            <p>Orange Thingy API is set to</p>
+            <label>Url: </label>
+            <input
+            type="text"
+            onChange={(event) => {
+              this.updateApiUrl(event.target.value);
+            }}
+            value={this.state.standardApiUrl}
+            /><br/>
           </div>
         </div>
       </div>
