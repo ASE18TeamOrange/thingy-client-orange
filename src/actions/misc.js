@@ -38,16 +38,6 @@ export const changeCardTab = (feature, tab) => ({
   tab,
 });
 
-export const notifyIftttTriggerStatus = (status) => ({
-  type: NOTIFY_IFTTT_TRIGGER_STATUS,
-  status,
-});
-
-export const receiveIFTTTKey = (key) => ({
-  type: RECEIVE_IFTTT_KEY,
-  key,
-});
-
 export const cleanTheSlate = () => ({
   type: CLEAN_THE_SLATE,
 });
@@ -152,147 +142,9 @@ export const toggleEnvironment = (toggle) => {
   };
 };
 
-export const toggleMotion = (toggle) => {
-  const motionFeatures = ["stepcounter", "tap", "heading", "quaternionorientation"];
-
-  return (dispatch) => {
-    dispatch(notifyFeatures(motionFeatures, toggle));
-  };
-};
-
-
-export const writeToSpeaker = (data) => {
-  return async (dispatch, getState) => {
-    await window.thingy.soundconfiguration.write({speakerMode: data.mode});
-    if (data.mode !== 2) {
-      await window.thingy.speakerdata.write(data);
-    } else {
-      let speakerStatusReady = true;
-      try {
-        dispatch(receiveNewReading("pcm", {reading: {playStatus: 1}}));
-        await window.thingy.mtu.write(273);
-        const myLogger = (data) => {
-          const speakerStatus = data.detail.status;
-          switch (speakerStatus) {
-          case 0:
-            speakerStatusReady = true;
-            break;
-          case 1:
-            speakerStatusReady = false;
-            break;
-          case 16:
-            speakerStatusReady = false;
-            break;
-          default:
-            speakerStatusReady = true;
-          }
-        };
-        window.thingy.addEventListener("speakerstatus", myLogger);
-        let index = 0;
-        const packetSize = 160;
-        let packets = 0;
-        let timer;
-        let retries = 0;
-        speakerStatusReady = true;
-        const writeSoundPCMBatch = async () => {
-          // Can write max 273 Bytes (MTU) at a time to the characteristic.
-          // Writing with maximum data payload might result in Thingy speaker buffer filling up and packets will be dropped.
-          // Sending 160 Byte batches has proved to be reliable.
-
-          // check if stop button was pressed
-          const state = getState();
-          if (state.misc.pcm.reading.reading.playStatus === 0) {
-            return;
-          }
-          if (speakerStatusReady === false) {
-            // Do a sanity check in case notifications have stopped whilst whe are retrying or we might en up in an endless loop of retries.
-            // If there are 10 retries in a row it probably means notifications have stopped.
-            if ((retries > 0) && (retries % 10) === 0) {
-              await window.thingy.speakerstatus.start();
-              retries = 0;
-            } else {
-              retries++;
-            }
-            // Delay execution by 10ms if Thingy audio buffer is almost full
-            timer = setTimeout(function() {
-              writeSoundPCMBatch();
-            }, 10);
-          } else {
-            // write 160 Byte chunks of 8-bit audio data to Thingy
-            if (index + packetSize < data.data.length) {
-              await window.thingy.speakerdata.write({mode: 2, data: data.data.slice(index, index + packetSize)});
-              index += packetSize;
-              packets++;
-              // There is possibly a bug in Chrome that leads to the notification callback not firing. Happens irregularly.
-              // Restart notifications every 20 packets to make sure notifications are running.
-              // This does not add an audible delay to the aduio transmission.
-              if (packets % 20 === 0) {
-                // await window.thingy.speakerstatus.start();
-              }
-              // reset retries on successfull write
-              retries = 0;
-              // Repeat
-              writeSoundPCMBatch();
-            } else {
-              // Send the last bytes
-              if (index < data.data.length) {
-                await window.thingy.speakerdata.write({mode: 2, data: data.data.slice(index, data.data.length - 1)});
-              } else {
-                return;
-              }
-            }
-          }
-        };
-        await window.thingy.speakerstatus.start();
-        await window.thingy.soundconfiguration.write({speakerMode: 2});
-        writeSoundPCMBatch();
-      } catch (error) {
-        // do something
-      }
-    }
-  };
-};
-
-export const stopAudioStream = () => {
-  return (dispatch) => {
-    dispatch(receiveNewReading("pcm", {reading: {playStatus: 0}}));
-  };
-};
-
-export const notifyMicrophone = (enable) => {
-  return async (dispatch) => {
-    dispatch(featureNotificationStatus("microphone", enable));
-
-    const myLogger = (data) => {
-      const tempData = data.detail;
-      window.thingy.microphone.play(tempData);
-    };
-
-    if (enable) {
-      try {
-        await window.thingy.mtu.write(276);
-        window.thingy.addEventListener("microphone", myLogger);
-        await window.thingy.microphone.start();
-      } catch (error) {
-        // do something
-      }
-    } else {
-      window.thingy.removeEventListener("microphone", myLogger);
-      await window.thingy.microphone.stop();
-    }
-  };
-};
 
 export const readFeature = (feature) => {
   return async (dispatch) => {
-    const reading = await window.thingy[feature].read();
-    dispatch(receiveNewReading(feature, reading));
-  };
-};
-
-export const writeFeature = (feature, value) => {
-  return async (dispatch) => {
-    await window.thingy[feature].write(value);
     const reading = await window.thingy[feature].read();
     dispatch(receiveNewReading(feature, reading));
   };
@@ -308,51 +160,6 @@ export const disconnect = () => {
   return async (dispatch) => {
     await window.thingy.disconnect();
     dispatch(cleanTheSlate());
-  };
-};
-
-export const triggerIFTTT = (eventName) => {
-  return async (dispatch, getState) => {
-    const state = getState();
-    const key = state.misc.ifttt.key;
-
-    if (key === "") {
-      dispatch(notifyUser({message: "You have to configure your IFTTT key before you can trigger events on the IFTTT platform", category: "warning"}));
-    } else {
-      if (["", undefined].includes(eventName)) {
-        dispatch(notifyUser({message: "You can't trigger a nameless event", category: "warning"}));
-      } else {
-        const url = `https://maker.ifttt.com/trigger/${eventName}/with/key/${key}`;
-
-        await fetch(url, {
-          method: "GET",
-          credentials: "omit",
-          mode: "no-cors",
-        });
-
-        dispatch(notifyUser({message: `An event with the name ${String.fromCharCode(parseInt("+ab", 16))}${eventName}${String.fromCharCode(parseInt("+bb", 16))} was triggered on the IFTTT platform`, category: "success"}));
-      }
-    }
-  };
-};
-
-export const getIFTTTKey = () => {
-  return async (dispatch) => {
-    let key = await localStorage.getItem("iftttkey");
-
-    if (key === null) {
-      key = "";
-    }
-
-    dispatch(receiveIFTTTKey(key));
-  };
-};
-
-export const setIFTTTKey = (key) => {
-  return async (dispatch) => {
-    await localStorage.setItem("iftttkey", key);
-    dispatch(receiveIFTTTKey(key));
-    dispatch(notifyUser({message: "Success", category: "success"}));
   };
 };
 

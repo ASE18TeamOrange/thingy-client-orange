@@ -48,11 +48,7 @@ class Account extends React.Component {
       listening: false,
     };
 
-    // if (this.state.id === undefined || this.state.id === "") {
-    this.getProfile().then(() => {
-      console.log("done");
-    });
-    // }
+    this.getProfile();
   }
 
   async getProfile() {
@@ -448,7 +444,6 @@ class Account extends React.Component {
             //document.getElementById("final").innerHTML = command;
           } catch (e) {}
         }
-
       };
     } catch (e) { }
   }

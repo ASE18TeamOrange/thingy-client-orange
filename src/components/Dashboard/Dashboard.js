@@ -4,7 +4,6 @@ import {Route, NavLink, Switch, Redirect} from "react-router-dom";
 import {BrowserRouter as Router} from "react-router-dom";
 import MediaQuery from "react-responsive";
 import MenuItem from "material-ui/MenuItem";
-import {ToastContainer, toast} from "react-toastify";
 import Login from "../Account/Login";
 import Subscription from "../Account/Subscription";
 import Home from "../Account/Home";
@@ -25,7 +24,6 @@ class Dashboard extends React.Component {
     this.login = localStorage.getItem("user");
 
     this.state = {notification: props.notification, firmware: props.firmware};
-    this.onConnectionEvent = this.onConnectionEvent.bind(this);
   }
 
   componentWillReceiveProps(np) {
@@ -33,39 +31,6 @@ class Dashboard extends React.Component {
       this.setState({
         notification: np.notification,
       });
-      if (np.notification) {
-        const type = np.notification.category;
-        const message = np.notification.message;
-        toast.dismiss();
-        if (type === "success") {
-          toast.success(message, {
-            autoClose: 2000,
-          });
-        } else if (type === "info") {
-          toast.info(message);
-        } else if (type === "warning") {
-          toast.warn(message);
-        } else if (type === undefined) {
-          toast.error("undefined error");
-        } else {
-          toast.error(message);
-        }
-      }
-    }
-  }
-
-  onConnectionEvent(state) {
-    this.props.onConnectionEvent(state);
-    if (state) {
-      this.props.readName();
-      this.props.readFirmware();
-      toast.info("Thingy connected");
-      this.props.startErrorNotification();
-      this.props.startDisconnectNotification();
-      this.props.startWriteNotification();
-      this.props.startBatteryNotification();
-    } else {
-      toast.info("Thingy disconnected");
     }
   }
 
@@ -132,15 +97,7 @@ class Dashboard extends React.Component {
               routes
             }
           </div>
-          <ToastContainer
-            position="bottom-center"
-            autoClose={4000}
-            draggablePercent={60}
-            closeButton={false}
-            className="toast-container"
-            hideProgressBar={true}
-            toastClassName="toast"
-          />
+
         </div>
       </Router>
     );
@@ -148,20 +105,7 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-  name: PropTypes.string,
   notification: PropTypes.object,
-  connected: PropTypes.bool,
-  batteryLevel: PropTypes.number,
-  onConnectionEvent: PropTypes.func,
-  readName: PropTypes.func,
-  readFirmware: PropTypes.func,
-  startErrorNotification: PropTypes.func,
-  startWriteNotification: PropTypes.func,
-  startBatteryNotification: PropTypes.func,
-  startDisconnectNotification: PropTypes.func,
-  notifyError: PropTypes.func,
-  disconnect: PropTypes.func,
-  firmware: PropTypes.string,
 };
 
 export default Dashboard;
